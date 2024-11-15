@@ -1,7 +1,13 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProviders";
 
 
-const Navbar = () => {
+
+const Navbar = () => { 
+const {name} = useContext(AuthContext);
+console.log(name)
+   
 
     const Links = <>
         <li><NavLink to='/'>Home</NavLink></li>
@@ -22,6 +28,7 @@ const Navbar = () => {
                     {Links}
                 </ul>
             </div>
+            
             <div className="navbar-end">
                 <button className="btn btn-ghost btn-circle">
                     <svg
