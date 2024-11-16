@@ -1,36 +1,43 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase.init";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export const AuthContext = createContext(null);
 
-const AuthProviders = ({children}) => {
+const AuthProviders = ({ children }) => {
     const [user, setUser] = useState(null);
-    const name= 'potato alu miya';
+    const name = 'potato alu miya';
 
-    const createUser= (email, password)=>{
+    const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const signInUser = (email, password)=>{
+    const signInUser = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    // onAuthStateChanged(auth, currentUser=>{
-    //     if(currentUser){
-    //         console.log('currently logged user', currentUser);
-    //         setUser(currentUser);
-    //     }
-    //     else{
-    //         console.log('NO user logged in')
-    //         setUser(null)
-    //     }
-    // })
+    const signOutUser=()=>{
+        return signOut(auth)
+    }
+
+    useEffect(() => {
+        const unSubcribe = onAuthStateChanged(auth, currentUser => {
+            console.log('current User', currentUser);
+            setUser(currentUser)
+        })
+
+        return () => {
+            unSubcribe();
+        }
+    }, [])
+
 
     const authInfo = {
-        name ,
+        name,
+        user,
         createUser,
-        signInUser
+        signInUser,
+        signOutUser
     }
 
 
