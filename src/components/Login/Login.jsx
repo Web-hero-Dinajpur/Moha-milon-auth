@@ -1,13 +1,26 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProviders";
 
 
 const Login = () => {
+
+    const { signInUser } = useContext(AuthContext)
 
     const handleSubmit = e => {
         e.preventDefault();
         const email = e.target.email.value
         const password = e.target.password.value
-        console.log(email, password)
+        console.log(email, password);
+
+        // create user 
+        signInUser(email, password)
+        .then(result=>{
+            console.log(result.user)
+        })
+        .catch(error=>{
+            console.log('ERROR', error.message)
+        })
     }
 
     return (
@@ -41,8 +54,8 @@ const Login = () => {
                             <button className="btn btn-primary">Login</button>
                         </div>
                     </form>
-                    
-                <p className="ml-4 pb-4">You have and account? please <Link to='/registar' className="font-semibold text-blue-800">Register Now</Link></p>
+
+                    <p className="ml-4 pb-4">You have and account? please <Link to='/registar' className="font-semibold text-blue-800">Register Now</Link></p>
                 </div>
             </div>
             <div>
