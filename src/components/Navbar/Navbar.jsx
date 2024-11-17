@@ -4,10 +4,17 @@ import { AuthContext } from "../Providers/AuthProviders";
 
 
 
-const Navbar = () => { 
-const {user, signOutUser} = useContext(AuthContext);
-console.log(user)
-   
+const Navbar = () => {
+    const { user, signOutUser } = useContext(AuthContext);
+    console.log(user)
+    const handleSignOut = () => {
+        signOutUser()
+            .then(() => {
+                console.log('user sign out successFully')
+            })
+            .catch(error => console.log('ERROR', error.message))
+    }
+
 
     const Links = <>
         <li><NavLink to='/'>Home</NavLink></li>
@@ -28,18 +35,18 @@ console.log(user)
                     {Links}
                 </ul>
             </div>
-            
+
             <div className="navbar-end">
                 {
                     user ? <>
-                    <span>{user.email}</span>
-                    <a className="btn">Sign Out</a>
+                        <span>{user.email}</span>
+                        <a onClick={handleSignOut} className="btn">Sign Out</a>
 
-                    
+
                     </>
-                    : 
-                    <Link to='/login'>Login</Link>
-                }               
+                        :
+                        <Link to='/login'>Login</Link>
+                }
             </div>
         </div>
     );
