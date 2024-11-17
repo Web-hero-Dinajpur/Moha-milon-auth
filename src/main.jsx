@@ -12,6 +12,7 @@ import Home from './components/Home/Home.jsx';
 import Login from './components/Login/Login.jsx';
 import Registation from './components/Register/Registation.jsx';
 import AuthProviders from './components/Providers/AuthProviders.jsx';
+import Orders from './components/Orders/Orders.jsx';
 
 
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: 'registar',
         element: <Registation></Registation>
+      },
+      {
+        path:'order',
+        element:<Orders></Orders>
       }
     ]
   },
